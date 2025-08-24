@@ -52,6 +52,15 @@ let currentMode = 'pan';
 
 const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
 
+function playSound() {
+    const audio = document.getElementById('soundEffect');
+    audio.currentTime = 0;
+    audio.play().catch(error => {
+        console.log('Error al reproducir sonido:', error);
+    });
+}
+
+
 if(paintUse == 0){
     changeModeButton.disabled = true    
 }
@@ -229,6 +238,7 @@ function handleDraw(e) {
     colorHistory[key] = colorInput.value;
     savePixel(cellX,cellY,key,colorInput.value);
     draw();
+    playSound()
     localStorage.setItem("use",Number(localStorage.getItem("use")-1));
     uses.textContent = "Usos: "+localStorage.getItem("use");
     }
