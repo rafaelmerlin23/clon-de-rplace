@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Dibuja!</title>
+  <link rel="stylesheet" href="css/main.css" />
+<script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.14.6/firebase-database.js"></script>
+</head>
+<body>
+  <div id="toolbar">
+    <label for="colorInput" id="colorLabel">Color: </label>
+    <input type="color" id="colorInput" value="#009578" />
+    <button id="changeMode"></button>
+    <button id="resetViewBtn">Reiniciar Vista</button>
+    <button id="toggleGridBtn">Ocultar Guía</button>
+    
+  </div>
+    <div id="toolbar2">
+    <label  id="uses" ></label>
+    
+  </div>
+  <div id="status">Zoom: 100%</div>
+  <div class="mode-indicator" id="modeIndicator">Modo: Desplazamiento</div>
+  <div id="mobile-controls">
+    <button id="zoomInBtn">+</button>
+    <button id="zoomOutBtn">-</button>
+  </div>
+  <canvas id="canvas"></canvas>
+
+  <script src="js/timeManage.js"></script>
+  <script src="js/main.js"></script>
+
+ <script>
+    var firebaseConfig = {
+      apiKey: "AIzaSyCS8GGyhHf1X4Izmts6Tt9y_H4W7KXZp78",
+      authDomain: "pixels-f9fd2.firebaseapp.com",
+      databaseURL: "https://pixels-f9fd2-default-rtdb.firebaseio.com",
+      projectId: "pixels-f9fd2",
+      storageBucket: "pixels-f9fd2.firebasestorage.app",
+      messagingSenderId: "958863967382",
+      appId: "1:958863967382:web:a52eb45767e721e92eaeb7",
+      measurementId: "G-1QEPQK203T"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+<script src="js/firebaseManage.js"></script>
+
+
+</body>
+</html>
