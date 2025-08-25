@@ -10,9 +10,11 @@ const zoomInBtn = document.getElementById("zoomInBtn");
 const zoomOutBtn = document.getElementById("zoomOutBtn");
 const modeIndicator = document.getElementById("modeIndicator");
 const changeModeButton = document.getElementById("changeMode");
+const removePixelButton = document.getElementById("removePixel")
 let CELL_SIDE_COUNT = 1000;
 let canvasWidth = 10000;
 let canvasHeight = 10000;
+let isActiveRemovePixel = false;
 let cellPixelLength = canvasWidth / CELL_SIDE_COUNT;
 const uses = document.getElementById("uses");
 canvas.width = window.innerWidth;
@@ -25,7 +27,7 @@ let isDragging = false;
 let isDrawing = false;
 let startX, startY;
 const colorHistory = {};
-
+const INITIAL_USES = 3000
 let minScale = 0.1;
 let maxScale = 5;
 let maxOffsetX = 0;
@@ -33,19 +35,19 @@ let maxOffsetY = 0;
 let minOffsetX = 0;
 let minOffsetY = 0;
 
+
+
+
+
+if(localStorage.getItem("use") === null){
+    localStorage.setItem("use",INITIAL_USES);
+}
+
 if(localStorage.getItem("use")<= 0){
     startCountdown()
 }
 
-let paintUse = localStorage.getItem("use");
-
-uses.textContent = "Usos: "+paintUse
-
-
-if(localStorage.getItem("use") === null){
-    localStorage.setItem("use",100);
-    paintUse = 100
-}
+uses.textContent = `Usos:  ${localStorage.getItem("use") != null ? localStorage.getItem("use") :"1000"}`;
 
 
 let currentMode = 'pan'; 
@@ -61,7 +63,7 @@ function playSound() {
 }
 
 
-if(paintUse == 0){
+if(localStorage.getItem("use") <= 0){
     changeModeButton.disabled = true    
 }
 
@@ -75,14 +77,30 @@ function calculateBounds() {
 function updateStatus() {
     statusElement.textContent = `Zoom: ${Math.round(scale * 100)}%`;
     modeIndicator.textContent = `Modo: ${currentMode === 'pan' ? 'Desplazamiento' : 'Dibujo'}`;
-    changeModeButton.textContent = currentMode === "pan" ? "Dibujar" :"Desplazar";
+    changeModeButton.textContent = currentMode === "pan" ? "pintar" :"Desplazar";
 }
+
+function toggleRemoveButton() {
+    isActiveRemovePixel = !isActiveRemovePixel;
+
+    if (isActiveRemovePixel) {
+        removePixelButton.style.border = "2px solid #3B82F6";
+        removePixelButton.style.backgroundColor = "#4ee053ff";  
+        
+    } else {
+        removePixelButton.style.border = "2px solid #4CAF50";
+        removePixelButton.style.backgroundColor = "#4CAF50";
+    }
+}
+
 
 function toggleMode() {
     
     currentMode = currentMode === 'pan' ? 'draw' : 'pan';
     updateStatus();
 }
+
+removePixelButton.addEventListener("click",toggleRemoveButton);
 
 canvas.addEventListener("mousedown", (e) => {
     if (e.button === 0) { 
@@ -235,10 +253,18 @@ function handleDraw(e) {
     if (cellX >= 0 && cellY >= 0 && cellX < CELL_SIDE_COUNT && cellY < CELL_SIDE_COUNT) {
     console.log(cellX,cellY)
     const key = `${cellX}_${cellY}`;
-    colorHistory[key] = colorInput.value;
-    savePixel(cellX,cellY,key,colorInput.value);
+
+    if(isActiveRemovePixel){
+        colorHistory[key] = "#ffffff";
+        removePixel(key);        
+    }
+    else{
+        colorHistory[key] = colorInput.value;
+        savePixel(cellX,cellY,key,colorInput.value);
+    }
+    
     draw();
-    playSound()
+    playSound();
     localStorage.setItem("use",Number(localStorage.getItem("use")-1));
     uses.textContent = "Usos: "+localStorage.getItem("use");
     }

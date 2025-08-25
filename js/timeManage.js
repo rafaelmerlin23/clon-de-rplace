@@ -1,4 +1,4 @@
-let timeLeft = 30;
+let timeLeft = 15;
 let countdownInterval = null;
 const timerElement = document.getElementById('uses');
 
@@ -8,7 +8,7 @@ function startCountdown() {
         clearInterval(countdownInterval);
     }
     
-    timeLeft = 30;
+    timeLeft = 15;
     updateTimerDisplay();
     
     countdownInterval = setInterval(() => {
@@ -29,7 +29,7 @@ function updateTimerDisplay() {
 }
 
 function handleTimeUp() {
-    localStorage.setItem("use",100)
+    localStorage.setItem("use",3000)
     document.getElementById("changeMode").disabled = false;
     timerElement.textContent = "Usos: "+localStorage.getItem("use");
     

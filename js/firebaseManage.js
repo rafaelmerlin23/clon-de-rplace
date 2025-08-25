@@ -18,6 +18,18 @@ function savePixel(x,y,key, color) {
     });
 }
 
+
+function removePixel(key) {
+    const pixelRef = database.ref('pixels/' + key);
+       pixelRef.remove()
+        .then(() => {
+            console.log("se eliminó el pixel");
+        })
+        .catch((error) => {
+            console.error("Error al eliminar el pixel", error);
+        }); 
+}
+
 function pixelSocket() {
     const pixelsRef = database.ref('pixels');
     
