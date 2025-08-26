@@ -117,6 +117,9 @@ window.addEventListener("mouseup", () => {
 });
 
 window.addEventListener("mousemove", (e) => {
+    if(currentMode != 'pan'){
+        return
+    }
     if (isDragging) {
     offsetX = e.clientX - startX;
     offsetY = e.clientY - startY;
@@ -171,6 +174,10 @@ function handleTouchStart(e) {
 
 function handleTouchMove(e) {
     e.preventDefault();
+    
+    if(currentMode != 'pan'){
+        return
+    }
     
     if (isDragging && e.touches.length === 1 && currentMode === 'pan') {
     offsetX = e.touches[0].clientX - startX;
