@@ -134,3 +134,65 @@ button :disabled{
 }
 
 
+
+#imageOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  pointer-events: none;
+}
+
+#imageOverlay:not(.hidden) {
+  display: flex;
+}
+
+#imageOverlay.hidden {
+  display: none;
+}
+
+#overlayImage {
+  max-width: 90%;
+  max-height: 80%;
+  opacity: 0.5;
+  pointer-events: none;
+}
+
+.overlay-controls {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(255, 255, 255, 0.9);
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  pointer-events: auto;
+  z-index: 101;
+}
+
+.overlay-controls button {
+  padding: 6px 12px;
+  background: #4CAF50;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.overlay-controls label {
+  font-weight: bold;
+  color: #333;
+}
+
+#opacitySlider {
+  width: 100px;
+}
